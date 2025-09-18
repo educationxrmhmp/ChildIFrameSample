@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Child Iframe</title>
+</head>
+<body>
+  <h2>Child Iframe</h2>
+  <button id="replyBtn">Reply to Parent</button>
+
+  <script>
+    // Listen for messages from parent
+    window.addEventListener("message", (event) => {
+      console.log("Iframe received:", event.data);
+      alert("Iframe received: " + event.data);
+    });
+
+    // Send reply to parent
+    document.getElementById("replyBtn").addEventListener("click", () => {
+      window.parent.postMessage("Hello from Iframe!", "*");
+    });
+  </script>
+</body>
+</html>
