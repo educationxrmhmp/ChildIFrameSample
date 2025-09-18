@@ -1,23 +1,26 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>Child Iframe</title>
-</head>
+<html lang="en">
+<head><meta charset="UTF-8"><title>Child Iframe</title></head>
 <body>
   <h2>Child Iframe</h2>
   <button id="replyBtn">Reply to Parent</button>
 
   <script>
-    // Listen for messages from parent
+    // listen for parent messages
     window.addEventListener("message", (event) => {
-      console.log("Iframe received:", event.data);
-      alert("Iframe received: " + event.data);
+      const { type, payload } = event.data || {};
+      if (type === "greeting") {
+        console.log("Child received greeting:", payload);
+        alert("Child got greeting: " + payload.text);
+      }
     });
 
-    // Send reply to parent
+    // reply back to parent
     document.getElementById("replyBtn").addEventListener("click", () => {
-      window.parent.postMessage("Hello from Iframe!", "*");
+      window.parent.postMessage(
+        { type: "reply", payload: { text: "Hello from Child!" } },
+        "*"
+      );
     });
   </script>
 </body>
